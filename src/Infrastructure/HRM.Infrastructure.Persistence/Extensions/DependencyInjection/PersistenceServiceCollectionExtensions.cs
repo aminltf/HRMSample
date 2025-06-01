@@ -17,6 +17,7 @@ public static class PersistenceServiceCollectionExtensions
 
         // Register Repositories
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+        services.AddScoped<IDependentRepository, DependentRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;

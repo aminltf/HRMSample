@@ -14,13 +14,16 @@ public class UnitOfWork : IUnitOfWork
 
     public UnitOfWork(
         ApplicationContext context,
-        IEmployeeRepository employeeRepository)
+        IEmployeeRepository employeeRepository,
+        IDependentRepository dependent)
     {
         _context = context;
         Employee = employeeRepository;
+        Dependent = dependent;
     }
 
     public IEmployeeRepository Employee { get; }
+    public IDependentRepository Dependent { get; }
 
     public async ValueTask DisposeAsync()
             => await _context.DisposeAsync();

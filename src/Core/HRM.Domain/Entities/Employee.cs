@@ -23,6 +23,8 @@ public class Employee : BaseAuditableEntity
     public string ZipCode { get; set; }
     public byte[] ProfileImage { get; set; }
 
+    public ICollection<Dependent> Dependents { get; set; }
+
     public Employee()
     {
 

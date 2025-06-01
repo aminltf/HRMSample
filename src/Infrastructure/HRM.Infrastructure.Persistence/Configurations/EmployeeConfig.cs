@@ -81,5 +81,10 @@ public class EmployeeConfig : IEntityTypeConfiguration<Employee>
         builder.Property(e => e.ProfileImage)
             .HasColumnType("varbinary(max)")
             .IsRequired(false);
+
+        builder.HasMany(e => e.Dependents)
+            .WithOne(d => d.Employee)
+            .HasForeignKey(d => d.EmployeeId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
