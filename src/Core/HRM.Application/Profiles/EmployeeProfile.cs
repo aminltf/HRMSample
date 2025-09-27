@@ -44,7 +44,5 @@ public class EmployeeProfile : Profile
             .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => (int)src.Gender))
             .ForMember(dest => dest.MaritalStatus, opt => opt.MapFrom(src => (int)src.MaritalStatus))
             .ForMember(dest => dest.HousingStatus, opt => opt.MapFrom(src => (int)src.HousingStatus));
-
-        CreateMap<Employee, EmployeeReportDto>();
     }
 }

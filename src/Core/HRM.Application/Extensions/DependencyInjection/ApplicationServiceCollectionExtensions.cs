@@ -27,7 +27,7 @@ public static class ApplicationServiceCollectionExtensions
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
         // Register Services
-        services.AddScoped<IEmployeeService, EmployeeService>();
+        services.AddScoped<IEmployeeReportPdfService, EmployeeReportPdfService>();
 
         return services;
     }

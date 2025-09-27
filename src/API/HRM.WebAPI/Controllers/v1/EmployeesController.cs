@@ -2,6 +2,7 @@
 
 using HRM.Application.Common.Interfaces.Services;
 using HRM.Application.Features.Employees.Commands;
+using HRM.Application.Features.Employees.Dtos;
 using HRM.Application.Features.Employees.Queries;
 using HRM.WebFramework.Controllers;
 using HRM.WebFramework.Models;
@@ -12,11 +13,9 @@ namespace HRM.WebAPI.Controllers.v1;
 [ApiVersion("1.0")]
 public class EmployeesController : BaseController<EmployeesController>
 {
-    private readonly IEmployeeService _service;
 
-    public EmployeesController(ILogger<EmployeesController> logger, IEmployeeService service) : base(logger)
+    public EmployeesController(ILogger<EmployeesController> logger) : base(logger)
     {
-        _service = service;
     }
 
     [HttpPost("create")]
@@ -69,18 +68,10 @@ public class EmployeesController : BaseController<EmployeesController>
         return Ok(result);
     }
 
-    [HttpPost("report")]
-    public async Task<IActionResult> GenerateReport([FromBody] EmployeeReportRequest request)
+    [HttpPost("export-pdf")]
+    public async Task<IActionResult> ExportPdf([FromBody] EmployeeReportRequestDto request)
     {
-        var result = await Mediator.Send(new GetEmployeesReportQuery
-        {
-            PageNumber = request.PageNumber,
-            PageSize = request.PageSize,
-            SelectedFields = request.SelectedFields
-        });
-
-        var pdfBytes = _service.GenerateDynamicReport(result.Items, request.SelectedFields);
-
-        return File(pdfBytes, "application/pdf", "EmployeeReport.pdf");
+        var result = await Mediator.Send(new ExportEmployeePdfReportQuery(request));
+        return File(result, "application/pdf", "EmployeeReport.pdf");
     }
 }
